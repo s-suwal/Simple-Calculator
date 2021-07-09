@@ -1,0 +1,246 @@
+import React, { Component } from 'react';
+import { AppRegistry, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import Constants from 'expo-constants';
+
+export default class App extends Component {
+    state ={
+        calculate: "",
+        answer: 0,
+        initialState: ''
+        }
+    
+  
+    calcText(){
+        const text = this.state.calculate
+        this.setState({
+            answer: eval(text)
+        })
+    }
+    
+    buttonPressed = (text) =>{
+        if (text == '='){
+            return this.calcText()
+        } 
+        this.setState({
+            calculate: this.state.calculate+text
+        })
+    };
+    
+    functionClick(text){
+       if (text == 'AC') {
+            this.setState({
+                calculate: this.state.initialState
+            })
+        }
+       
+       if (text == 'D'){
+        
+                let text = this.state.calculate.split('')
+                text.pop()
+                this.setState({
+                    calculate: text.join('')
+                })
+        }else if (text == '/'){
+            if (this.state.calculate == '')
+            return
+            else 
+            this.setState({
+                calculate: this.state.calculate + '/'
+            })
+            
+        }else if (text == 'x'){
+            if (this.state.calculate == '')
+            return
+            else 
+            this.setState({
+                calculate: this.state.calculate + '*'
+            })
+        }else if (text == '+'){
+            if (this.state.calculate == '')
+            return
+            else 
+            this.setState({
+                calculate: this.state.calculate + '+'
+            })
+        }else if (text =='-'){
+            if (this.state.calculate == '')
+            return
+            else 
+            this.setState({
+                calculate: this.state.calculate + '-'
+            })
+        }
+    };
+    render() {
+      
+        return (
+            <View style={styles.container}>
+                
+                <View style={styles.calculation}>
+                    
+                    <Text style={styles.calculationText}>
+                        {this.state.calculate}
+                    </Text>
+                </View>
+                
+                <View style={styles.answer}>
+                
+                    <Text style={styles.answerText}>
+                        {this.state.answer}
+                    </Text>
+                </View>
+                
+                <View style={styles.buttons}>
+                
+                    <View style={styles.numbers}>
+                        <View style={styles.row}>
+                            <TouchableOpacity onPress={() => this.buttonPressed(7)} style={styles.input}>
+                                <Text style={styles.number}>7</Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity onPress={() => this.buttonPressed(8)} style={styles.input}>
+                                <Text style={styles.number}>8</Text>
+                            </TouchableOpacity>
+        
+                            <TouchableOpacity onPress={() => this.buttonPressed(9)} style={styles.input}>
+                                <Text style={styles.number}>9</Text>
+                            </TouchableOpacity>
+                        </View>
+                        
+                        <View style={styles.row}>
+                            <TouchableOpacity onPress={() => this.buttonPressed(4)} style={styles.input}>
+                                <Text style={styles.number}>4</Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity onPress={() => this.buttonPressed(5)} style={styles.input}>
+                                <Text style={styles.number}>5</Text>
+                            </TouchableOpacity>
+        
+                            <TouchableOpacity onPress={() => this.buttonPressed(6)} style={styles.input}>
+                                <Text style={styles.number}>6</Text>
+                            </TouchableOpacity>
+                        </View>
+                        
+                        <View style={styles.row}>
+                            <TouchableOpacity onPress={() => this.buttonPressed(1)} style={styles.input}>
+                                <Text style={styles.number}>1</Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity onPress={() => this.buttonPressed(2)} style={styles.input}>
+                                <Text style={styles.number}>2</Text>
+                            </TouchableOpacity>
+        
+                            <TouchableOpacity onPress={() => this.buttonPressed(3)} style={styles.input}>
+                                <Text style={styles.number}>3</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.row}>
+                            <TouchableOpacity onPress={() => this.buttonPressed(0)} style={styles.input}>
+                                <Text style={styles.number}>0</Text>
+                            </TouchableOpacity>
+                            
+                            <TouchableOpacity onPress={() => this.buttonPressed('.')} style={styles.input}>
+                                <Text style={styles.number}>.</Text>
+                            </TouchableOpacity>
+        
+                            <TouchableOpacity onPress={() => this.buttonPressed('=')} style={styles.input}>
+                                <Text style={styles.number}>=</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    
+                    <View style={styles.operations}>
+                        <TouchableOpacity onPress={() => this.functionClick('AC')} style={styles.input}>
+                            <Text style={styles.operationText}>AC</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.functionClick('D')} style={styles.input}>
+                            <Text style={styles.operationText}>D</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.functionClick('/')} style={styles.input}>
+                            <Text style={styles.operationText}>/</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.functionClick('x')} style={styles.input}>
+                            <Text style={styles.operationText}>x</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.functionClick('+')} style={styles.input}>
+                            <Text style={styles.operationText}>+</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.functionClick('-')} style={styles.input}>
+                            <Text style={styles.operationText}>-</Text>
+                        </TouchableOpacity>
+                        
+                    </View>
+                    
+                </View>
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+   container: {
+    flex: 1,
+  },
+  calculation: {
+    flex: 2,
+    
+    backgroundColor: "black",
+    
+    alignItems: "flex-end",
+    flexWrap: 'wrap',
+    
+  },
+  calculationText: {
+    fontSize: 20,
+    color: "white",
+  },
+  answerText: {
+    fontSize: 20,
+    color: "black",
+    fontWeight: "bold",
+  },
+  number: {
+    fontSize: 30,
+    color: "white",
+  },
+  answer: {
+    flex: 1,
+    backgroundColor: "#F4F6F6",
+    justifyContent: "center",
+    alignItems: "flex-end",
+  },
+  input: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "30",
+    borderRadius: 10,
+    margin: 5,
+    backgroundColor: '#2E86C1',
+    alignSelf: 'stretch',
+  },
+  buttons: {
+    flex: 7,
+    flexDirection: "row",
+  },
+  numbers: {
+    flex: 3,
+    backgroundColor: "black",
+  },
+  row: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  operations: {
+    flex: 1,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  operationText: {
+    fontSize: 25,
+    color: "white",
+  },
+});
